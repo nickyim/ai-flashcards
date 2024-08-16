@@ -46,6 +46,10 @@ export default function Home() {
   const handleGetStarted = () => {
     router.push('/generate');
   }  
+  
+  const handleMyCollection = () => {
+    router.push('/flashcards');
+  }  
 
 
   return (
@@ -87,9 +91,14 @@ export default function Home() {
           {" "}
           The easiest way to make flashcards from your text
         </Typography>
-        <Button variant="contained" color="primary" sx={{ mt: 2 }} onClick={handleGetStarted}>
-          Get Started
-        </Button>
+        <Box>
+          <Button variant="contained" color="primary" sx={{ mt: 2, mr: 2 }} onClick={handleGetStarted}>
+            Get Started
+          </Button>
+          <Button variant="contained" color="primary" sx={{ mt: 2 }} onClick={handleMyCollection}>
+            My Collection
+          </Button>
+        </Box>
       </Box>
       <Box sx={{ my: 6 }}>
         <Typography variant="h4" gutterBottom>
