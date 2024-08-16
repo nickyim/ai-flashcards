@@ -5,8 +5,11 @@ import getStripe from "@/utils/get-stripe";
 import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
 import Head from 'next/head';
 import { Container, Toolbar, Typography, Button, AppBar, Box, Grid } from "@mui/material";
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
+
+  const router = useRouter();
 
   const handleSubmit = async () => {
     const checkoutSession = await fetch('/api/checkout_session', {
@@ -19,7 +22,7 @@ export default function Home() {
     const checkoutSessionJson = await checkoutSession.json()
 
     if (checkoutSession.statusCode === 500) {
-      console.error(checoutSession.message)
+      console.error(checkoutSession.message)
       return
     }
 
@@ -33,18 +36,23 @@ export default function Home() {
     }
   }
 
+  const handleGetStarted = () => {
+    router.push('/generate');
+  }  
+
+
   return (
     <Container maxWidth="100vw">
       <Head>
-        <title>Flashcard SaaS</title>
+        <title>AI Flashcards</title>
         <meta name = "description" content="Create flashcard from your text" />
       </Head>
 
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" style={({flexGrow: 1})}>
-            Flashcard SaaS
-          </Typography>
+            AI Flashcards
+          </Typography> 
           <SignedOut>
             <Button color="inherit" href="sign-in">Login</Button>
             <Button color="inherit" href="sign-up">Sign Up</Button>
@@ -62,13 +70,13 @@ export default function Home() {
         })}
       >
         <Typography variant="h2" gutterBottom>
-          Welcome to Flashcard SaaS
+          Welcome to AI Flashcards
         </Typography>
         <Typography variant="h5" gutterBottom>
           {' '}
           The easiest way to make flashcards from your text
         </Typography>
-        <Button variant="contained" color="primary" sx={({mt: 2})}>
+        <Button variant="contained" color="primary" sx={{ mt: 2 }} onClick={handleGetStarted}>
           Get Started
         </Button>
       </Box>
