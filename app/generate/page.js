@@ -6,6 +6,7 @@ import { db } from '@/firebase';
 import { useRouter } from "next/navigation";
 import { writeBatch, doc, collection, setDoc, getDoc } from 'firebase/firestore';
 import { Container, Box, Typography, Paper, TextField, Button, Grid, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Card, CardActionArea, CardContent } from '@mui/material';
+import zIndex from '@mui/material/styles/zIndex';
 
 export default function Generate() {
     const {isLoaded, isSignedIn, user} = useUser();
@@ -79,40 +80,50 @@ export default function Generate() {
         <Box sx={{
             mt: 4, 
             mb: 6, 
-            display: 'flex', 
+            position: 'fixed', 
+            bottom: '0px',
             flexDirection: 'column', 
-            alignItems: 'center'
+            alignItems: 'center',
+            backgroundColor: 'white',
+            zIndex: 1
         }}
         >
-            <Typography variant="h4">
-                Generate Flashcards
-            </Typography>
-            <Paper sx={{p: 2, width: '100%'}}>
-                <TextField
-                    value = {text}
-                    onChange={(e) => setText(e.target.value)}
-                    label="Enter Text"
-                    fullWidth
-                    multiline
-                    rows={4}
-                    variant="outlined"
-                    sx={{mb: 2}}
-                    />
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={handleSubmit}
-                        fullWidth
-                    >
-                        {' '}
-                        Submit
-                    </Button>
+            <Paper sx={{p: 2, display: 'flex', flexDirection: 'column', width: '100%', height: '8vw'}}>
+                <Typography variant="h4">
+                    Generate Flashcards
+                </Typography>
+                <Box sx={{p: 2, display: 'flex', width: '100%', gap: '1vw'}}>
+                    <TextField
+                        value = {text}
+                        onChange={(e) => setText(e.target.value)}
+                        label="Enter Prompt"
+                        
+                        multiline
+                        rows={1}
+                        variant="outlined"
+                        sx={{width: '36.5vw'}}
+                        />
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={handleSubmit}
+                            sx={{mb: 2, width: '6.5vw', height: '3vw'}}
+                        >
+                            {' '}
+                            Submit
+                        </Button>
+                </Box>
             </Paper>
         </Box>
 
         {flashcards.length > 0 && (
-            <Box sx={{mt: 4}}>
-                <Typography variant="h5">Flashcards Preview</Typography>
+            <Box sx={{mt: 4, mb: 30}}>
+                <Box sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 5}}>
+                    <Typography variant="h5">Flashcards Preview</Typography>
+                    <Button variant="contained" color="secondary" onClick={handleOpen}>
+                        Save
+                    </Button>
+                </Box>
                 <Grid container spacing={3}>
                     {flashcards.map((flashcard, index) => (
                         <Grid item xs={12} sm={6} md={4} key={index}>
@@ -130,6 +141,7 @@ export default function Generate() {
                                                 transformStyle: 'preserve-3d',
                                                 position: 'relative',
                                                 width: '100%',
+                                                backfaceVisibility: 'hidden',
                                                 height: '200px',
                                                 boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2)',
                                                 transform: flipped[index] ? 'rotateY(180deg)' : 'rotateY(0deg)',
@@ -169,11 +181,6 @@ export default function Generate() {
                         </Grid>
                     ))}
                 </Grid>
-                <Box sx={{mt: 4, display: 'flex', justifyContent: 'center'}}>
-                    <Button variant="contained" color="secondary" onClick={handleOpen}>
-                        Save
-                    </Button>
-                </Box>
             </Box>
         )}
 
