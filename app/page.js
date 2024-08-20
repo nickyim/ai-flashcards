@@ -60,8 +60,13 @@ export default function Home() {
   };
 
   const handleGetStarted = () => {
-    router.push("/generate");
-  };
+    router.push('/generate');
+  }  
+  
+  const handleMyCollection = () => {
+    router.push('/flashcards');
+  }  
+
 
   return (
     <ThemeProvider theme={theme}>
@@ -73,6 +78,7 @@ export default function Home() {
           flexDirection: "column",
         }}
       >
+
         <AppBar position="static" sx={{ background: "primary.main" }}>
           <Toolbar variant="dense">
             <Typography
