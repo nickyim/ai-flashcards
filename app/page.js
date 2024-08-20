@@ -29,6 +29,24 @@ const theme = createTheme({
       default: "#F5F5F5",
     },
   },
+  typography: {
+    fontFamily: "Roboto, sans-serif",
+    h3: {
+      fontWeight: 700,
+    },
+    h4: {
+      fontWeight: 700,
+    },
+    h5: {
+      fontWeight: 700,
+    },
+    h6: {
+      fontWeight: 500,
+    },
+    body2: {
+      fontSize: "1rem",
+    },
+  },
 });
 
 export default function Home() {
@@ -60,32 +78,32 @@ export default function Home() {
   };
 
   const handleGetStarted = () => {
-    router.push('/generate');
-  }  
-  
-  const handleMyCollection = () => {
-    router.push('/flashcards');
-  }  
+    router.push("/welcome");
+  };
 
+  const handleMyCollection = () => {
+    router.push("/flashcards");
+  };
 
   return (
     <ThemeProvider theme={theme}>
       <Box
         sx={{
-          backgroundColor: "background.default",
+          background: "linear-gradient(to bottom, #eaf4f4, #a9d6e5)",
           height: "100vh",
           display: "flex",
           flexDirection: "column",
+          // alignItems: "center",
+          // justifyContent: "center",
         }}
       >
-
         <AppBar position="static" sx={{ background: "primary.main" }}>
           <Toolbar variant="dense">
             <Typography
               variant="h6"
               style={{ flexGrow: 1, fontWeight: "bold" }}
             >
-              AI Flashcards
+              FlashAI
             </Typography>
             <SignedOut>
               <Button
@@ -120,13 +138,14 @@ export default function Home() {
             flexGrow: 1,
             display: "flex",
             flexDirection: "column",
-            // justifyContent: "space-between",
+            justifyContent: "center",
+            alignItems: "center",
             py: 2,
             gap: 9,
           }}
         >
           <Head>
-            <title>AI Flashcards</title>
+            <title>FlashAI</title>
             <meta
               name="description"
               content="Create flashcard from your text"
@@ -140,10 +159,15 @@ export default function Home() {
               fontWeight="bold"
               color="primary.main"
             >
-              Welcome to AI Flashcards
+              Welcome to FlashAI
             </Typography>
-            <Typography variant="h6" gutterBottom color="text.secondary">
-              The easiest way to make flashcards from your text
+            <Typography
+              variant="h6"
+              gutterBottom
+              color="text.secondary"
+              className="fade-in-text"
+            >
+              Transform your text into smart flashcards effortlessly
             </Typography>
             <Button
               variant="contained"
@@ -154,10 +178,12 @@ export default function Home() {
                 px: 3,
                 py: 1,
                 borderRadius: 2,
+                color: "#f6fff8",
                 "&:hover": {
-                  backgroundColor: "secondary.dark",
+                  backgroundColor: "#cce3de",
                   transform: "translateY(-2px)",
                   boxShadow: 3,
+                  color: "secondary.dark",
                 },
                 transition: "all 0.3s",
               }}
@@ -165,148 +191,6 @@ export default function Home() {
             >
               Get Started
             </Button>
-          </Box>
-
-          <Box sx={{ mb: 2 }}>
-            <Typography
-              variant="h4"
-              gutterBottom
-              textAlign="center"
-              color="primary.main"
-              fontWeight="bold"
-            >
-              Features
-            </Typography>
-            <Grid container spacing={2}>
-              {[
-                {
-                  title: "Easy Text Input",
-                  content:
-                    "Simply input your text and let our software do the rest.",
-                },
-                {
-                  title: "Smart Flashcards",
-                  content:
-                    "Our AI intelligently breaks down your text into concise flashcards.",
-                },
-                {
-                  title: "Accessible Anywhere",
-                  content:
-                    "Access your flashcards from any device, at any time.",
-                },
-              ].map((feature, index) => (
-                <Grid item xs={12} md={4} key={index}>
-                  <Box
-                    sx={{
-                      p: 2,
-                      borderRadius: 2,
-                      boxShadow: 1,
-                      height: "100%",
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "center",
-                      backgroundColor: "white",
-                      transition: "all 0.3s",
-                      "&:hover": {
-                        transform: "translateY(-5px)",
-                        boxShadow: 3,
-                      },
-                    }}
-                  >
-                    <Typography
-                      variant="h6"
-                      gutterBottom
-                      color="secondary.main"
-                      fontWeight="bold"
-                    >
-                      {feature.title}
-                    </Typography>
-                    <Typography variant="body2">{feature.content}</Typography>
-                  </Box>
-                </Grid>
-              ))}
-            </Grid>
-          </Box>
-
-          <Box sx={{ textAlign: "center" }}>
-            <Typography
-              variant="h4"
-              gutterBottom
-              color="primary.main"
-              fontWeight="bold"
-            >
-              Pricing
-            </Typography>
-            <Grid container spacing={2}>
-              {[
-                {
-                  title: "Basic",
-                  price: "$5 / month",
-                  content: "Basic features and limited storage.",
-                  onClick: () => {},
-                },
-                {
-                  title: "Pro",
-                  price: "$10 / month",
-                  content:
-                    "Unlimited flashcards and storage, with priority support.",
-                  onClick: handleSubmit,
-                },
-              ].map((plan, index) => (
-                <Grid item xs={12} md={6} key={index}>
-                  <Box
-                    sx={{
-                      p: 2,
-                      borderRadius: 2,
-                      boxShadow: 1,
-                      height: "100%",
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "space-between",
-                      backgroundColor: "white",
-                      transition: "all 0.3s",
-                      "&:hover": {
-                        transform: "scale(1.03)",
-                        boxShadow: 3,
-                      },
-                    }}
-                  >
-                    <div>
-                      <Typography
-                        variant="h5"
-                        gutterBottom
-                        color="primary.main"
-                        fontWeight="bold"
-                      >
-                        {plan.title}
-                      </Typography>
-                      <Typography
-                        variant="h6"
-                        gutterBottom
-                        color="secondary.main"
-                      >
-                        {plan.price}
-                      </Typography>
-                      <Typography variant="body2">{plan.content}</Typography>
-                    </div>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      size="small"
-                      sx={{
-                        mt: 2,
-                        "&:hover": {
-                          backgroundColor: "primary.dark",
-                        },
-                      }}
-                      onClick={plan.onClick}
-                    >
-                      Choose {plan.title}
-                    </Button>
-                  </Box>
-                </Grid>
-              ))}
-            </Grid>
           </Box>
         </Container>
       </Box>
