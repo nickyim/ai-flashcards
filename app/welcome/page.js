@@ -57,7 +57,7 @@ export default function welcomePage() {
     const checkoutSession = await fetch("/api/checkout_session", {
       method: "POST",
       headers: {
-        origin: "http://localhost:3000",
+        origin: "http://localhost:3000/welcome",
       },
     });
 
@@ -338,60 +338,119 @@ export default function welcomePage() {
                     "Unlimited flashcards and storage, with priority support.",
                   onClick: handleSubmit,
                 },
-              ].map((plan, index) => (
-                <Grid item xs={12} md={6} key={index}>
-                  <Box
-                    sx={{
-                      p: 2,
-                      borderRadius: 2,
-                      boxShadow: 3,
-                      height: "100%",
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "space-between",
-                      backgroundColor: "white",
-                      transition: "all 0.3s",
-                      "&:hover": {
-                        transform: "scale(1.03)",
-                        boxShadow: 3,
-                      },
-                    }}
-                  >
-                    <div>
-                      <Typography
-                        variant="h5"
-                        gutterBottom
-                        color="primary.main"
-                        fontWeight="bold"
+              ].map((plan, index) =>
+                plan.title === "Basic" ? (
+                  <SignedOut>
+                    <Grid item xs={12} md={6} key={index}>
+                      <Box
+                        sx={{
+                          p: 2,
+                          borderRadius: 2,
+                          boxShadow: 3,
+                          height: "100%",
+                          display: "flex",
+                          flexDirection: "column",
+                          justifyContent: "space-between",
+                          backgroundColor: "white",
+                          transition: "all 0.3s",
+                          "&:hover": {
+                            transform: "scale(1.03)",
+                            boxShadow: 3,
+                          },
+                        }}
                       >
-                        {plan.title}
-                      </Typography>
-                      <Typography
-                        variant="h6"
-                        gutterBottom
-                        color="secondary.main"
-                      >
-                        {plan.price}
-                      </Typography>
-                      <Typography variant="body2">{plan.content}</Typography>
-                    </div>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      size="small"
+                        <div>
+                          <Typography
+                            variant="h5"
+                            gutterBottom
+                            color="primary.main"
+                            fontWeight="bold"
+                          >
+                            {plan.title}
+                          </Typography>
+                          <Typography
+                            variant="h6"
+                            gutterBottom
+                            color="secondary.main"
+                          >
+                            {plan.price}
+                          </Typography>
+                          <Typography variant="body2">
+                            {plan.content}
+                          </Typography>
+                        </div>
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          size="small"
+                          href="sign-up"
+                          sx={{
+                            mt: 2,
+                            "&:hover": {
+                              backgroundColor: "primary.dark",
+                            },
+                          }}
+                        >
+                          Choose {plan.title}
+                        </Button>
+                      </Box>
+                    </Grid>
+                  </SignedOut>
+                ) : (
+                  <Grid item xs={12} md={6} key={index}>
+                    <Box
                       sx={{
-                        mt: 2,
+                        p: 2,
+                        borderRadius: 2,
+                        boxShadow: 3,
+                        height: "100%",
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "space-between",
+                        backgroundColor: "white",
+                        transition: "all 0.3s",
                         "&:hover": {
-                          backgroundColor: "primary.dark",
+                          transform: "scale(1.03)",
+                          boxShadow: 3,
                         },
                       }}
-                      onClick={plan.onClick}
                     >
-                      Choose {plan.title}
-                    </Button>
-                  </Box>
-                </Grid>
-              ))}
+                      <div>
+                        <Typography
+                          variant="h5"
+                          gutterBottom
+                          color="primary.main"
+                          fontWeight="bold"
+                        >
+                          {plan.title}
+                        </Typography>
+                        <Typography
+                          variant="h6"
+                          gutterBottom
+                          color="secondary.main"
+                        >
+                          {plan.price}
+                        </Typography>
+                        <Typography variant="body2">{plan.content}</Typography>
+                      </div>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        size="small"
+                        sx={{
+                          mt: 2,
+                          "&:hover": {
+                            backgroundColor: "primary.dark",
+                          },
+                        }}
+                        onClick={plan.onClick}
+                      >
+                        Choose {plan.title}
+                      </Button>
+                    </Box>
+                  </Grid>
+                )
+              )}
             </Grid>
           </Box>
         </Container>
