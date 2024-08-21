@@ -5,7 +5,8 @@ import { useUser } from "@clerk/nextjs";
 import { db } from '@/firebase';
 import { useRouter } from "next/navigation";
 import { writeBatch, doc, collection, setDoc, getDoc } from 'firebase/firestore';
-import { Container, Box, Typography, Paper, TextField, Button, Grid, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Card, CardActionArea, CardContent } from '@mui/material';
+import { Container, Stack, Box, Typography, AppBar, Toolbar, Paper, TextField, Button, Grid, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Card, CardActionArea, CardContent } from '@mui/material';
+import { SignedIn, SignedOut, UserButton, SignIn, SignUp } from "@clerk/nextjs";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
@@ -31,6 +32,10 @@ export default function Generate() {
     const [open, setOpen] = useState(false);
     const router = useRouter();
 
+    const handleGoHome = () => {
+        router.push("/welcome");
+      };
+    
     const handleSubmit = async () => {
         fetch('api/generate', {
             method: 'POST',
@@ -111,6 +116,57 @@ export default function Generate() {
                     padding: 4 
                 }}
             >
+                <AppBar position="fixed" sx={{ background: "primary.main" }}>
+                <Toolbar variant="dense">
+                    <Typography
+                    variant="h6"
+                    style={{ flexGrow: 1, fontWeight: "bold" }}
+                    >
+                    FlashAI
+                    </Typography>
+                    <SignedOut>
+                    <Button
+                        color="primary"
+                        onClick={handleGoHome}
+                        sx={{
+                        fontWeight: "bold",
+                        backgroundColor: "#b8d0eb",
+                        borderRadius: 2,
+                        width: "150px",
+                        "&:hover": {
+                            backgroundColor: "#a9d6e5",
+                            transform: "translateY(-1px)",
+                            boxShadow: 3,
+                        },
+                        }}
+                    >
+                        Go Home
+                    </Button>
+                    </SignedOut>
+                    <SignedIn>
+                    <Stack direction="row" spacing={2}>
+                        <Button
+                        color="primary"
+                        onClick={handleGoHome}
+                        sx={{
+                            fontWeight: "bold",
+                            backgroundColor: "#b8d0eb",
+                            borderRadius: 2,
+                            width: "150px",
+                            "&:hover": {
+                            backgroundColor: "#a9d6e5",
+                            transform: "translateY(-1px)",
+                            boxShadow: 3,
+                            },
+                        }}
+                        >
+                        Go Home
+                        </Button>
+                        <UserButton />
+                    </Stack>
+                    </SignedIn>
+                </Toolbar>
+                </AppBar>
                 <Container maxWidth="md" sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                     <Box
                         sx={{
