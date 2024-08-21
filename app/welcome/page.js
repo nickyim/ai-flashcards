@@ -129,7 +129,26 @@ export default function welcomePage() {
               </Button>
             </SignedOut>
             <SignedIn>
-              <UserButton />
+              <Stack direction="row">
+                <Button
+                  color="primary"
+                  onClick={handleGoHome}
+                  sx={{
+                    fontWeight: "bold",
+                    backgroundColor: "#b8d0eb",
+                    borderRadius: 2,
+                    width: "150px",
+                    "&:hover": {
+                      backgroundColor: "#a9d6e5",
+                      transform: "translateY(-1px)",
+                      boxShadow: 3,
+                    },
+                  }}
+                >
+                  Go Home
+                </Button>
+                <UserButton />
+              </Stack>
             </SignedIn>
           </Toolbar>
         </AppBar>
