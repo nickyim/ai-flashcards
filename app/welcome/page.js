@@ -67,7 +67,6 @@ export default function WelcomePage() {
   const router = useRouter();
   const [fadeIn, setFadeIn] = useState(false);
   const [isPremium, setIsPremium] = useState(false);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setFadeIn(true);
@@ -76,7 +75,6 @@ export default function WelcomePage() {
   useEffect(() => {
     const checkStatus = async () => {
       if (!user) {
-        setLoading(false);
         return; // Ensure user is defined
       }
       const userDocRef = doc(collection(db, "users"), user.id);
@@ -86,7 +84,6 @@ export default function WelcomePage() {
         const proMember = docSnap.data().isPro || false;
         setIsPremium(proMember);
       }
-      setLoading(false);
     };
 
     checkStatus();
@@ -147,10 +144,6 @@ export default function WelcomePage() {
       });
     }
   };
-
-  if (loading) {
-    return <div>Loading...</div>; // You can replace this with a more sophisticated loading indicator
-  }
 
   return (
     <ThemeProvider theme={theme}>
