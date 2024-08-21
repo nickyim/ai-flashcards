@@ -223,7 +223,7 @@ export default function WelcomePage() {
               display: "flex",
               flexDirection: "column",
               py: 2,
-              gap: 9,
+              gap: 6,
             }}
           >
             <Head>
