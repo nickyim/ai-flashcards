@@ -545,7 +545,7 @@ export default function WelcomePage() {
                           gutterBottom
                           color="secondary.main"
                         >
-                          $5 / month
+                          $7 / month
                         </Typography>
                         <Typography variant="body2">
                           Unlimited flashcards and storage, with priority
