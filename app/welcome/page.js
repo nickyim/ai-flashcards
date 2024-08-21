@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import getStripe from "@/utils/get-stripe";
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import Head from "next/head";
@@ -129,7 +128,7 @@ export default function welcomePage() {
               </Button>
             </SignedOut>
             <SignedIn>
-              <Stack direction="row">
+              <Stack direction="row" spacing={2}>
                 <Button
                   color="primary"
                   onClick={handleGoHome}
