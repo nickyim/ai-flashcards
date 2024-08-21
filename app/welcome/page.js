@@ -22,6 +22,7 @@ import {
   createTheme,
   Stack,
   Fade,
+  Link,
 } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -167,7 +168,9 @@ export default function WelcomePage() {
               variant="h6"
               style={{ flexGrow: 1, fontWeight: "bold" }}
             >
-              FlashAI
+              <Link href="/" passHref color="inherit" underline="none">
+                FlashAI
+              </Link>
             </Typography>
             <SignedOut>
               <Button
