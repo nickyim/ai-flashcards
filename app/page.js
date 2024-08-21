@@ -2,7 +2,13 @@
 
 import Image from "next/image";
 import getStripe from "@/utils/get-stripe";
-import { SignedIn, SignedOut, UserButton, useClerk, useUser } from "@clerk/nextjs";
+import {
+  SignedIn,
+  SignedOut,
+  UserButton,
+  useClerk,
+  useUser,
+} from "@clerk/nextjs";
 import Head from "next/head";
 import {
   Container,
@@ -184,7 +190,7 @@ export default function Home() {
           </Head>
 
           <Box sx={{ textAlign: "center", mb: 2 }}>
-            <Fade in={fadeIn} timeout={800}>
+            <Fade in={fadeIn} timeout={1500}>
               <div>
                 <Typography
                   variant="h2"
