@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import getStripe from "@/utils/get-stripe";
-import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { SignedIn, SignedOut, UserButton, useClerk, useUser } from "@clerk/nextjs";
 import Head from "next/head";
 import {
   Container,
@@ -52,12 +52,35 @@ const theme = createTheme({
 });
 
 export default function Home() {
+  const { openSignIn, openSignUp } = useClerk();
+  const { isSignedIn } = useUser();
   const router = useRouter();
   const [fadeIn, setFadeIn] = useState(false);
+
+  const redirectUrl = "/welcome";
 
   useEffect(() => {
     setFadeIn(true);
   }, []);
+
+  const handleSignIn = () => {
+    if (isSignedIn) {
+      router.push(redirectUrl);
+    } else {
+      openSignIn({ afterSignInUrl: redirectUrl });
+    }
+  };
+
+  const handleSignUp = () => {
+    if (isSignedIn) {
+      router.push(redirectUrl);
+    } else {
+      openSignUp({
+        afterSignUpUrl: redirectUrl,
+        redirectUrl: redirectUrl,
+      });
+    }
+  };
 
   const handleSubmit = async () => {
     const checkoutSession = await fetch("/api/checkout_session", {
@@ -103,8 +126,6 @@ export default function Home() {
           height: "100vh",
           display: "flex",
           flexDirection: "column",
-          // alignItems: "center",
-          // justifyContent: "center",
         }}
       >
         <AppBar position="static" sx={{ background: "primary.main" }}>
@@ -118,7 +139,7 @@ export default function Home() {
             <SignedOut>
               <Button
                 color="inherit"
-                href="sign-in"
+                onClick={handleSignIn}
                 sx={{
                   mx: 1,
                   "&:hover": { backgroundColor: "rgba(255, 255, 255, 0.1)" },
@@ -128,7 +149,7 @@ export default function Home() {
               </Button>
               <Button
                 color="inherit"
-                href="sign-up"
+                onClick={handleSignUp}
                 sx={{
                   mx: 1,
                   "&:hover": { backgroundColor: "rgba(255, 255, 255, 0.1)" },

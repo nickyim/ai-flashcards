@@ -1,7 +1,7 @@
 "use client";
 
 import getStripe from "@/utils/get-stripe";
-import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { SignedIn, SignedOut, UserButton, useClerk, useUser } from "@clerk/nextjs";
 import Head from "next/head";
 import {
   Container,
@@ -14,7 +14,6 @@ import {
   ThemeProvider,
   createTheme,
   Stack,
-  Fade,
 } from "@mui/material";
 import { useRouter } from "next/navigation";
 
@@ -51,6 +50,8 @@ const theme = createTheme({
 });
 
 export default function welcomePage() {
+  const { openSignIn, openSignUp } = useClerk();
+  const { isSignedIn } = useUser();
   const router = useRouter();
 
   const handleSubmit = async () => {
@@ -83,11 +84,26 @@ export default function welcomePage() {
   };
 
   const handleGoHome = () => {
-    router.push("/");
+    router.push("/welcome");
   };
 
-  const handleMyCollection = () => {
-    router.push("/flashcards");
+  const handleSignIn = () => {
+    if (isSignedIn) {
+      router.push("/welcome");
+    } else {
+      openSignIn({ afterSignInUrl: "/welcome" });
+    }
+  };
+
+  const handleSignUp = () => {
+    if (isSignedIn) {
+      router.push("/welcome");
+    } else {
+      openSignUp({
+        afterSignUpUrl: "/welcome",
+        redirectUrl: "/welcome",
+      });
+    }
   };
 
   return (
@@ -157,7 +173,6 @@ export default function welcomePage() {
             flexGrow: 1,
             display: "flex",
             flexDirection: "column",
-            // justifyContent: "space-between",
             py: 2,
             gap: 9,
           }}
@@ -200,7 +215,7 @@ export default function welcomePage() {
                   variant="contained"
                   color="secondary"
                   size="large"
-                  href="sign-in"
+                  onClick={handleSignIn}
                   sx={{
                     mt: 2,
                     px: 3,
@@ -224,7 +239,7 @@ export default function welcomePage() {
                   variant="contained"
                   color="secondary"
                   size="large"
-                  href="sign-up"
+                  onClick={handleSignUp}
                   sx={{
                     mt: 2,
                     px: 3,
@@ -314,7 +329,6 @@ export default function welcomePage() {
                       "&:hover": {
                         transform: "translateY(-5px)",
                         boxShadow: 3,
-                        // cursor: "pointer",
                       },
                     }}
                   >
@@ -346,135 +360,118 @@ export default function welcomePage() {
               container
               spacing={2}
               alignItems="center"
-              justifyContent="center"
+              justifyContent={isSignedIn ? "center" : "space-around"}
             >
-              {[
-                {
-                  title: "Basic",
-                  price: "Free!",
-                  content: "Basic features and limited storage.",
-                  onClick: () => {},
-                },
-                {
-                  title: "Pro",
-                  price: "$7 / month",
-                  content:
-                    "Unlimited flashcards and storage, with priority support.",
-                  onClick: handleSubmit,
-                },
-              ].map((plan, index) =>
-                plan.title === "Basic" ? (
-                  <SignedOut>
-                    <Grid item xs={12} md={6} key={index}>
-                      <Box
-                        sx={{
-                          p: 2,
-                          borderRadius: 2,
-                          boxShadow: 3,
-                          height: "100%",
-                          display: "flex",
-                          flexDirection: "column",
-                          justifyContent: "space-between",
-                          backgroundColor: "white",
-                          transition: "all 0.3s",
-                          "&:hover": {
-                            transform: "scale(1.03)",
-                            boxShadow: 3,
-                          },
-                        }}
-                      >
-                        <div>
-                          <Typography
-                            variant="h5"
-                            gutterBottom
-                            color="primary.main"
-                            fontWeight="bold"
-                          >
-                            {plan.title}
-                          </Typography>
-                          <Typography
-                            variant="h6"
-                            gutterBottom
-                            color="secondary.main"
-                          >
-                            {plan.price}
-                          </Typography>
-                          <Typography variant="body2">
-                            {plan.content}
-                          </Typography>
-                        </div>
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          size="small"
-                          href="sign-up"
-                          sx={{
-                            mt: 2,
-                            "&:hover": {
-                              backgroundColor: "primary.dark",
-                            },
-                          }}
-                        >
-                          Choose {plan.title}
-                        </Button>
-                      </Box>
-                    </Grid>
-                  </SignedOut>
-                ) : (
-                  <Grid item xs={12} md={6} key={index}>
-                    <Box
-                      sx={{
-                        p: 2,
-                        borderRadius: 2,
+              {!isSignedIn && (
+                <Grid item xs={12} md={6}>
+                  <Box
+                    sx={{
+                      p: 2,
+                      borderRadius: 2,
+                      boxShadow: 3,
+                      height: "100%",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "space-between",
+                      backgroundColor: "white",
+                      transition: "all 0.3s",
+                      "&:hover": {
+                        transform: "scale(1.03)",
                         boxShadow: 3,
-                        height: "100%",
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "space-between",
-                        backgroundColor: "white",
-                        transition: "all 0.3s",
+                      },
+                    }}
+                  >
+                    <div>
+                      <Typography
+                        variant="h5"
+                        gutterBottom
+                        color="primary.main"
+                        fontWeight="bold"
+                      >
+                        Basic
+                      </Typography>
+                      <Typography
+                        variant="h6"
+                        gutterBottom
+                        color="secondary.main"
+                      >
+                        Free!
+                      </Typography>
+                      <Typography variant="body2">
+                        Basic features and limited storage.
+                      </Typography>
+                    </div>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      size="small"
+                      sx={{
+                        mt: 2,
                         "&:hover": {
-                          transform: "scale(1.03)",
-                          boxShadow: 3,
+                          backgroundColor: "primary.dark",
                         },
                       }}
+                      onClick={handleSignUp}
                     >
-                      <div>
-                        <Typography
-                          variant="h5"
-                          gutterBottom
-                          color="primary.main"
-                          fontWeight="bold"
-                        >
-                          {plan.title}
-                        </Typography>
-                        <Typography
-                          variant="h6"
-                          gutterBottom
-                          color="secondary.main"
-                        >
-                          {plan.price}
-                        </Typography>
-                        <Typography variant="body2">{plan.content}</Typography>
-                      </div>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        size="small"
-                        sx={{
-                          mt: 2,
-                          "&:hover": {
-                            backgroundColor: "primary.dark",
-                          },
-                        }}
-                        onClick={plan.onClick}
-                      >
-                        Choose {plan.title}
-                      </Button>
-                    </Box>
-                  </Grid>
-                )
+                      Choose Basic
+                    </Button>
+                  </Box>
+                </Grid>
               )}
+              <Grid item xs={12} md={6}>
+                <Box
+                  sx={{
+                    p: 2,
+                    borderRadius: 2,
+                    boxShadow: 3,
+                    height: "100%",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "space-between",
+                    backgroundColor: "white",
+                    transition: "all 0.3s",
+                    "&:hover": {
+                      transform: "scale(1.03)",
+                      boxShadow: 3,
+                    },
+                  }}
+                >
+                  <div>
+                    <Typography
+                      variant="h5"
+                      gutterBottom
+                      color="primary.main"
+                      fontWeight="bold"
+                    >
+                      Pro
+                    </Typography>
+                    <Typography
+                      variant="h6"
+                      gutterBottom
+                      color="secondary.main"
+                    >
+                      $7 / month
+                    </Typography>
+                    <Typography variant="body2">
+                      Unlimited flashcards and storage, with priority support.
+                    </Typography>
+                  </div>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    size="small"
+                    sx={{
+                      mt: 2,
+                      "&:hover": {
+                        backgroundColor: "primary.dark",
+                      },
+                    }}
+                    onClick={handleSubmit}
+                  >
+                    Choose Pro
+                  </Button>
+                </Box>
+              </Grid>
             </Grid>
           </Box>
         </Container>

@@ -101,6 +101,10 @@ export default function Flashcard() {
         router.push("/welcome");
     };
 
+    const handleBackToCollection = () => {
+        router.push("/flashcards");
+    };
+
     if (!isLoaded || !isSignedIn) {
         return <></>;
     }
@@ -242,14 +246,22 @@ export default function Flashcard() {
                                         </Box>
                                     ))}
                                 </Slider>
-                                <Button 
-                                    variant="contained" 
-                                    color="primary" 
-                                    sx={{ mt: 4 }} 
-                                    onClick={() => setViewMode('grid')}
-                                >
-                                    Switch to Grid View
-                                </Button>
+                                <Stack direction="row" spacing={2} sx={{ mt: 4 }}>
+                                   <Button 
+                                        variant="contained" 
+                                        color="primary" 
+                                        onClick={handleBackToCollection}
+                                    >
+                                        Back to Collection
+                                    </Button>
+                                    <Button 
+                                        variant="contained" 
+                                        color="primary" 
+                                        onClick={() => setViewMode('grid')}
+                                    >
+                                        Grid View
+                                    </Button>
+                                </Stack>
 
                                 {/* Table Section */}
                                 <Box sx={{ mt: 6 }}>
@@ -281,14 +293,22 @@ export default function Flashcard() {
                         {viewMode === 'grid' && (
                             <>
                                 {/* Grid View (flipping cards) */}
-                                <Button 
-                                    variant="contained" 
-                                    color="primary" 
-                                    sx={{ mt: 4 }} 
-                                    onClick={() => setViewMode('default')}
-                                >
-                                    Back to Default View
-                                </Button>
+                                <Stack direction="row" spacing={2} sx={{ mt: 4 }}>
+                                    <Button 
+                                        variant="contained" 
+                                        color="primary" 
+                                        onClick={() => setViewMode('default')}
+                                    >
+                                        Back to Default View
+                                    </Button>
+                                    <Button 
+                                        variant="contained" 
+                                        color="secondary" 
+                                        onClick={handleBackToCollection}
+                                    >
+                                        Back to Collection
+                                    </Button>
+                                </Stack>
 
                                 <Grid container spacing={2} sx={{ mt: 4 }}>
                                     {flashcards.map((flashcard, index) => (
