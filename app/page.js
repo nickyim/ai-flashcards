@@ -14,8 +14,10 @@ import {
   Grid,
   ThemeProvider,
   createTheme,
+  Fade,
 } from "@mui/material";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const theme = createTheme({
   palette: {
@@ -51,6 +53,11 @@ const theme = createTheme({
 
 export default function Home() {
   const router = useRouter();
+  const [fadeIn, setFadeIn] = useState(false);
+
+  useEffect(() => {
+    setFadeIn(true);
+  }, []);
 
   const handleSubmit = async () => {
     const checkoutSession = await fetch("/api/checkout_session", {
@@ -90,6 +97,9 @@ export default function Home() {
       <Box
         sx={{
           background: "linear-gradient(to bottom, #eaf4f4, #a9d6e5)",
+          backgroundImage: "url('/bgUp3.png')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
           height: "100vh",
           display: "flex",
           flexDirection: "column",
@@ -153,44 +163,49 @@ export default function Home() {
           </Head>
 
           <Box sx={{ textAlign: "center", mb: 2 }}>
-            <Typography
-              variant="h3"
-              gutterBottom
-              fontWeight="bold"
-              color="primary.main"
-            >
-              Welcome to FlashAI
-            </Typography>
-            <Typography
-              variant="h6"
-              gutterBottom
-              color="text.secondary"
-              className="fade-in-text"
-            >
-              Transform your text into smart flashcards effortlessly
-            </Typography>
-            <Button
-              variant="contained"
-              color="secondary"
-              size="large"
-              sx={{
-                mt: 2,
-                px: 3,
-                py: 1,
-                borderRadius: 2,
-                color: "#f6fff8",
-                "&:hover": {
-                  backgroundColor: "#cce3de",
-                  transform: "translateY(-2px)",
-                  boxShadow: 3,
-                  color: "secondary.dark",
-                },
-                transition: "all 0.3s",
-              }}
-              onClick={handleGetStarted}
-            >
-              Get Started
-            </Button>
+            <Fade in={fadeIn} timeout={800}>
+              <div>
+                <Typography
+                  variant="h2"
+                  gutterBottom
+                  fontWeight="bold"
+                  color="primary.main"
+                >
+                  Welcome to FlashAI
+                </Typography>
+                <Typography
+                  variant="h5"
+                  gutterBottom
+                  color="text.secondary"
+                  className="fade-in-text"
+                >
+                  Transform your text into smart flashcards effortlessly
+                </Typography>
+
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  size="large"
+                  sx={{
+                    mt: 2,
+                    px: 3,
+                    py: 1,
+                    borderRadius: 2,
+                    color: "#f6fff8",
+                    "&:hover": {
+                      backgroundColor: "#cce3de",
+                      transform: "translateY(-2px)",
+                      boxShadow: 3,
+                      color: "secondary.dark",
+                    },
+                    transition: "all 0.3s",
+                  }}
+                  onClick={handleGetStarted}
+                >
+                  Get Started
+                </Button>
+              </div>
+            </Fade>
           </Box>
         </Container>
       </Box>
