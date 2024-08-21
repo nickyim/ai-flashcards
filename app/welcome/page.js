@@ -247,7 +247,7 @@ export default function welcomePage() {
                   }}
                   onClick={handleGetStarted}
                 >
-                  Get Started
+                  Generate Flashcards
                 </Button>
               </SignedIn>
             </Stack>
@@ -266,19 +266,19 @@ export default function welcomePage() {
             <Grid container spacing={2}>
               {[
                 {
-                  title: "Easy Text Input",
+                  title: "Effortless Text Input",
                   content:
-                    "Simply input your text and let our software do the rest.",
+                    "Seamlessly input your text and let our advanced algorithms handle the rest, transforming your notes into study-ready flashcards.",
                 },
                 {
-                  title: "Smart Flashcards",
+                  title: "Intelligent Flashcards",
                   content:
-                    "Our AI intelligently breaks down your text into concise flashcards.",
+                    "Our cutting-edge AI breaks down your text into precise, easy-to-digest flashcards, ensuring you grasp key concepts quickly.",
                 },
                 {
-                  title: "Accessible Anywhere",
+                  title: "Universal Access",
                   content:
-                    "Access your flashcards from any device, at any time.",
+                    "Access your flashcards from any device, anytime, anywhere, and never miss a study session again.",
                 },
               ].map((feature, index) => (
                 <Grid item xs={12} md={4} key={index}>
