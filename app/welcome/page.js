@@ -156,7 +156,7 @@ export default function WelcomePage() {
       <Box
         sx={{
           background: "linear-gradient(to bottom, #eaf4f4, #a9d6e5)",
-          height: "100vh",
+          minHeight: "100vh",
           display: "flex",
           flexDirection: "column",
         }}
