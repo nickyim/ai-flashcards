@@ -354,11 +354,13 @@ export default function welcomePage() {
                   title: "Basic",
                   price: "Free!",
                   content: "Basic features and limited storage.",
-                  onClick: () => {},
+                  onClick: () => {
+                    handleGetStarted();
+                  },
                 },
                 {
                   title: "Pro",
-                  price: "$7 / month",
+                  price: "$5 / month",
                   content:
                     "Unlimited flashcards and storage, with priority support.",
                   onClick: handleSubmit,
