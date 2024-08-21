@@ -324,7 +324,12 @@ export default function welcomePage() {
             >
               Pricing
             </Typography>
-            <Grid container spacing={2}>
+            <Grid
+              container
+              spacing={2}
+              alignItems="center"
+              justifyContent="center"
+            >
               {[
                 {
                   title: "Basic",
